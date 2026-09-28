@@ -1,108 +1,84 @@
-<style>
-.hfma_page { font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; color: #1f2937; max-width: 1040px; margin: 0 auto; }
-.hfma_page * { box-sizing: border-box; }
-.hfma_badge { display: inline-block; background: #ccfbf1; color: #0f766e; font-size: 12px; font-weight: 700; letter-spacing: .04em; padding: 6px 14px; border-radius: 999px; margin-bottom: 18px; }
-.hfma_hero { text-align: center; padding: 36px 16px 8px; }
-.hfma_hero h1 { font-size: 34px; font-weight: 800; margin: 0; line-height: 1.25; color: #111827; }
-.hfma_hero h1 span { color: #0d9488; }
-.hfma_hero p { color: #4b5563; font-size: 16px; margin: 14px auto 0; max-width: 620px; }
-.hfma_section { padding: 40px 16px 8px; }
-.hfma_section h2 { text-align: center; font-size: 24px; font-weight: 800; color: #111827; margin: 0 0 6px; }
-.hfma_section > p.hfma_subtext { text-align: center; color: #6b7280; font-size: 14px; margin: 0 0 28px; }
-.hfma_steps { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
-.hfma_step { flex: 1 1 260px; max-width: 320px; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 22px; }
-.hfma_step_icon { width: 34px; height: 34px; border-radius: 999px; background: #ccfbf1; color: #0f766e; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; margin-bottom: 14px; }
-.hfma_step h3 { font-size: 16px; font-weight: 700; color: #111827; margin: 0 0 8px; }
-.hfma_step p { font-size: 13.5px; color: #4b5563; margin: 0; line-height: 1.55; }
-.hfma_features { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-.hfma_feature { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 20px 22px; }
-.hfma_feature h3 { font-size: 15px; font-weight: 700; color: #111827; margin: 0 0 8px; }
-.hfma_feature h3 .hfma_icon { color: #0d9488; margin-right: 6px; }
-.hfma_feature p { font-size: 13.5px; color: #4b5563; margin: 0; line-height: 1.55; }
-.hfma_config { background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 14px; padding: 26px 28px; margin: 40px 16px 8px; }
-.hfma_config h2 { font-size: 19px; font-weight: 800; color: #0f766e; margin: 0 0 14px; }
-.hfma_config h2 .hfma_icon { margin-right: 8px; }
-.hfma_config ol { margin: 0; padding-inline-start: 20px; color: #1f2937; }
-.hfma_config li { font-size: 14px; margin-bottom: 8px; line-height: 1.6; }
-.hfma_config b { color: #111827; }
-.hfma_footer { text-align: center; padding: 34px 16px 20px; color: #6b7280; font-size: 13px; border-top: 1px solid #e5e7eb; margin-top: 30px; }
-.hfma_footer a { color: #0d9488; text-decoration: none; font-weight: 600; }
-</style>
+<div style="font-family: -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; color: #1f2937; max-width: 1040px; margin: 0 auto;">
 
-<div class="hfma_page">
-
-  <div class="hfma_hero">
-    <span class="hfma_badge">ODOO 20.0 &middot; COMMUNITY &amp; ENTERPRISE</span>
-    <h1>Face &amp; Mood <span>Attendance</span></h1>
-    <p>Camera-based check-in/out that recognizes an employee's face and reads their mood at the same moment &mdash; so HR can step in before a quiet bad week turns into a resignation.</p>
+  <div style="text-align: center; padding: 36px 16px 8px;">
+    <span style="display: inline-block; background-color: #ccfbf1; color: #0f766e; font-size: 12px; font-weight: 700; letter-spacing: .04em; padding: 6px 14px; border-radius: 999px; margin-bottom: 18px;">ODOO 20.0 &middot; COMMUNITY &amp; ENTERPRISE</span>
+    <h1 style="font-size: 34px; font-weight: 800; margin: 0; line-height: 1.25; color: #111827;">Face &amp; Mood <span style="color: #0d9488;">Attendance</span></h1>
+    <p style="color: #4b5563; font-size: 16px; margin: 14px auto 0; max-width: 620px;">Camera-based check-in/out that recognizes an employee's face and reads their mood at the same moment &mdash; so HR can step in before a quiet bad week turns into a resignation.</p>
   </div>
 
-  <div class="hfma_section">
-    <h2>How it works</h2>
-    <p class="hfma_subtext">Three steps &mdash; nothing leaves the employee's browser except the final result.</p>
-    <div class="hfma_steps">
-      <div class="hfma_step">
-        <div class="hfma_step_icon">1</div>
-        <h3>Look at the camera</h3>
-        <p>The employee stands in front of the kiosk (or opens the self check-in page). Their face is matched entirely in the browser &mdash; no photo is ever uploaded.</p>
-      </div>
-      <div class="hfma_step">
-        <div class="hfma_step_icon">2</div>
-        <h3>Mood is read at that moment</h3>
-        <p>The dominant facial expression (happy, sad, neutral, ...) is captured at the same instant and logged on the attendance record.</p>
-      </div>
-      <div class="hfma_step">
-        <div class="hfma_step_icon">3</div>
-        <h3>HR is alerted, not the algorithm</h3>
-        <p>After enough consecutive low-mood days, HR and the manager get a review task. A person always decides &mdash; nothing is auto-approved.</p>
-      </div>
-    </div>
+  <div style="padding: 40px 16px 8px;">
+    <h2 style="text-align: center; font-size: 24px; font-weight: 800; color: #111827; margin: 0 0 6px;">How it works</h2>
+    <p style="text-align: center; color: #6b7280; font-size: 14px; margin: 0 0 28px;">Three steps &mdash; nothing leaves the employee's browser except the final result.</p>
+    <table style="width: 100%; border-collapse: separate; border-spacing: 10px 0;" cellpadding="0" cellspacing="0">
+      <tr>
+        <td style="width: 33.33%; vertical-align: top; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 22px;">
+          <div style="width: 32px; height: 32px; line-height: 32px; text-align: center; border-radius: 999px; background-color: #ccfbf1; color: #0f766e; font-weight: 800; font-size: 14px; margin-bottom: 14px;">1</div>
+          <div style="font-size: 16px; font-weight: 700; color: #111827; margin-bottom: 8px;">Look at the camera</div>
+          <div style="font-size: 13.5px; color: #4b5563; line-height: 1.55;">The employee stands in front of the kiosk (or opens the self check-in page). Their face is matched entirely in the browser &mdash; no photo is ever uploaded.</div>
+        </td>
+        <td style="width: 33.33%; vertical-align: top; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 22px;">
+          <div style="width: 32px; height: 32px; line-height: 32px; text-align: center; border-radius: 999px; background-color: #ccfbf1; color: #0f766e; font-weight: 800; font-size: 14px; margin-bottom: 14px;">2</div>
+          <div style="font-size: 16px; font-weight: 700; color: #111827; margin-bottom: 8px;">Mood is read at that moment</div>
+          <div style="font-size: 13.5px; color: #4b5563; line-height: 1.55;">The dominant facial expression (happy, sad, neutral, ...) is captured at the same instant and logged on the attendance record.</div>
+        </td>
+        <td style="width: 33.33%; vertical-align: top; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 22px;">
+          <div style="width: 32px; height: 32px; line-height: 32px; text-align: center; border-radius: 999px; background-color: #ccfbf1; color: #0f766e; font-weight: 800; font-size: 14px; margin-bottom: 14px;">3</div>
+          <div style="font-size: 16px; font-weight: 700; color: #111827; margin-bottom: 8px;">HR is alerted, not the algorithm</div>
+          <div style="font-size: 13.5px; color: #4b5563; line-height: 1.55;">After enough consecutive low-mood days, HR and the manager get a review task. A person always decides &mdash; nothing is auto-approved.</div>
+        </td>
+      </tr>
+    </table>
   </div>
 
-  <div class="hfma_section">
-    <h2>Key features</h2>
-    <p class="hfma_subtext">&nbsp;</p>
-    <div class="hfma_features">
-      <div class="hfma_feature">
-        <h3><span class="hfma_icon">&#128100;</span>In-browser face recognition</h3>
-        <p>Runs entirely client-side with face-api.js. No external service, no photo ever leaves the browser &mdash; only the match result is sent.</p>
-      </div>
-      <div class="hfma_feature">
-        <h3><span class="hfma_icon">&#128522;</span>Mood at every check-in/out</h3>
-        <p>Captures the dominant facial expression at check-in and check-out and stores it on the attendance record for reporting.</p>
-      </div>
-      <div class="hfma_feature">
-        <h3><span class="hfma_icon">&#128276;</span>Wellbeing streak alerts</h3>
-        <p>A daily job watches for consecutive low-mood days per employee and raises a human-review task for HR and the manager &mdash; never an automatic decision.</p>
-      </div>
-      <div class="hfma_feature">
-        <h3><span class="hfma_icon">&#9989;</span>Explicit, revocable consent</h3>
-        <p>Nothing is captured or matched until an employee's consent is ticked on their record. Withdrawing consent deletes their stored face data immediately.</p>
-      </div>
-      <div class="hfma_feature">
-        <h3><span class="hfma_icon">&#127970;</span>Multi-company ready</h3>
-        <p>Kiosk model URL, thresholds and incentive amount are configurable per company from Settings.</p>
-      </div>
-      <div class="hfma_feature">
-        <h3><span class="hfma_icon">&#127760;</span>Arabic included</h3>
-        <p>Full Arabic translation of fields, views, menus and messages, ready to use as soon as Arabic is enabled.</p>
-      </div>
-    </div>
+  <div style="padding: 40px 16px 8px;">
+    <h2 style="text-align: center; font-size: 24px; font-weight: 800; color: #111827; margin: 0 0 28px;">Key features</h2>
+    <table style="width: 100%; border-collapse: separate; border-spacing: 10px 14px;" cellpadding="0" cellspacing="0">
+      <tr>
+        <td style="width: 50%; vertical-align: top; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 20px 22px;">
+          <div style="font-size: 15px; font-weight: 700; color: #111827; margin-bottom: 8px;"><span style="color: #0d9488;">&#128100;</span> In-browser face recognition</div>
+          <div style="font-size: 13.5px; color: #4b5563; line-height: 1.55;">Runs entirely client-side with face-api.js. No external service, no photo ever leaves the browser &mdash; only the match result is sent.</div>
+        </td>
+        <td style="width: 50%; vertical-align: top; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 20px 22px;">
+          <div style="font-size: 15px; font-weight: 700; color: #111827; margin-bottom: 8px;"><span style="color: #0d9488;">&#128522;</span> Mood at every check-in/out</div>
+          <div style="font-size: 13.5px; color: #4b5563; line-height: 1.55;">Captures the dominant facial expression at check-in and check-out and stores it on the attendance record for reporting.</div>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 50%; vertical-align: top; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 20px 22px;">
+          <div style="font-size: 15px; font-weight: 700; color: #111827; margin-bottom: 8px;"><span style="color: #0d9488;">&#128276;</span> Wellbeing streak alerts</div>
+          <div style="font-size: 13.5px; color: #4b5563; line-height: 1.55;">A daily job watches for consecutive low-mood days per employee and raises a human-review task for HR and the manager &mdash; never an automatic decision.</div>
+        </td>
+        <td style="width: 50%; vertical-align: top; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 20px 22px;">
+          <div style="font-size: 15px; font-weight: 700; color: #111827; margin-bottom: 8px;"><span style="color: #0d9488;">&#9989;</span> Explicit, revocable consent</div>
+          <div style="font-size: 13.5px; color: #4b5563; line-height: 1.55;">Nothing is captured or matched until an employee's consent is ticked on their record. Withdrawing consent deletes their stored face data immediately.</div>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 50%; vertical-align: top; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 20px 22px;">
+          <div style="font-size: 15px; font-weight: 700; color: #111827; margin-bottom: 8px;"><span style="color: #0d9488;">&#127970;</span> Multi-company ready</div>
+          <div style="font-size: 13.5px; color: #4b5563; line-height: 1.55;">Kiosk model URL, thresholds and incentive amount are configurable per company from Settings.</div>
+        </td>
+        <td style="width: 50%; vertical-align: top; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 20px 22px;">
+          <div style="font-size: 15px; font-weight: 700; color: #111827; margin-bottom: 8px;"><span style="color: #0d9488;">&#127760;</span> Arabic included</div>
+          <div style="font-size: 13.5px; color: #4b5563; line-height: 1.55;">Full Arabic translation of fields, views, menus and messages, ready to use as soon as Arabic is enabled.</div>
+        </td>
+      </tr>
+    </table>
   </div>
 
-  <div class="hfma_config">
-    <h2><span class="hfma_icon">&#9881;&#65039;</span>Configuration</h2>
-    <ol>
-      <li>Install the module (depends on <b>Attendances</b> and <b>Time Off</b>).</li>
-      <li>Go to <b>Settings &gt; Companies &gt; (your company)</b> and open the <b>Face &amp; Mood Attendance</b> section: set the sad-day threshold, confidence threshold and kiosk model URL.</li>
-      <li>Add a dedicated user to the <b>Mood Attendance Kiosk Device</b> group and leave it logged in at the kiosk page on the entrance tablet.</li>
-      <li>Each employee ticks consent on their record, then enrolls their own face from <b>Attendances &gt; My Face ID</b> &mdash; done.</li>
+  <div style="background-color: #f0fdfa; border: 1px solid #99f6e4; border-radius: 14px; padding: 26px 28px; margin: 40px 16px 8px;">
+    <h2 style="font-size: 19px; font-weight: 800; color: #0f766e; margin: 0 0 14px;">&#9881;&#65039; Configuration</h2>
+    <ol style="margin: 0; padding-inline-start: 20px; color: #1f2937;">
+      <li style="font-size: 14px; margin-bottom: 8px; line-height: 1.6;">Install the module (depends on <b style="color: #111827;">Attendances</b> and <b style="color: #111827;">Time Off</b>).</li>
+      <li style="font-size: 14px; margin-bottom: 8px; line-height: 1.6;">Go to <b style="color: #111827;">Settings &gt; Companies &gt; (your company)</b> and open the <b style="color: #111827;">Face &amp; Mood Attendance</b> section: set the sad-day threshold, confidence threshold and kiosk model URL.</li>
+      <li style="font-size: 14px; margin-bottom: 8px; line-height: 1.6;">Add a dedicated user to the <b style="color: #111827;">Mood Attendance Kiosk Device</b> group and leave it logged in at the kiosk page on the entrance tablet.</li>
+      <li style="font-size: 14px; margin-bottom: 8px; line-height: 1.6;">Each employee ticks consent on their record, then enrolls their own face from <b style="color: #111827;">Attendances &gt; My Face ID</b> &mdash; done.</li>
     </ol>
   </div>
 
-  <div class="hfma_footer">
-    Developed by <b>Allam Bushra</b> &mdash; Odoo developer<br/>
-    <a href="https://www.linkedin.com/in/lomixyz/" target="_blank" rel="noopener">linkedin.com/in/lomixyz</a>
+  <div style="text-align: center; padding: 34px 16px 20px; color: #6b7280; font-size: 13px; border-top: 1px solid #e5e7eb; margin-top: 30px;">
+    Developed by <b style="color: #111827;">Allam Bushra</b> &mdash; Odoo Techno-Functional Consultant<br/>
+    <a href="https://www.linkedin.com/in/lomixyz/" target="_blank" rel="noopener" style="color: #0d9488; text-decoration: none; font-weight: 600;">linkedin.com/in/lomixyz</a>
   </div>
 
 </div>

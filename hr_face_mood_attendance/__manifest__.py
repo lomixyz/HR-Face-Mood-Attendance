@@ -1,6 +1,6 @@
 {
     'name': 'Face & Mood Attendance',
-    'version': '20.0.1.0.7',
+    'version': '20.0.1.0.10',
     'category': 'Human Resources/Attendances',
     'summary': 'Face-recognition check-in/out with mood detection and wellbeing alerts',
     'description': """
