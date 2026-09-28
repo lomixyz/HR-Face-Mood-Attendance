@@ -16,6 +16,11 @@ class ResCompany(models.Model):
         string='Mood Confidence Threshold', default=0.55,
         help="Minimum confidence (0 to 1) the browser's expression model must "
              "report before a mood reading counts towards the streak.")
+    mood_leave_type_id = fields.Many2one(
+        'hr.leave.type', string='Wellbeing Leave Type',
+        help="Leave type used when auto-creating a draft leave request for an "
+             "employee who hits the sad-streak threshold. Leave empty to skip "
+             "automatic leave creation and only notify HR / the manager.")
     mood_incentive_amount = fields.Float(
         string='Wellbeing Incentive Amount',
         help="Suggested amount to log on the wellbeing incentive record when "

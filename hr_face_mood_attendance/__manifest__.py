@@ -1,6 +1,6 @@
 {
     'name': 'Face & Mood Attendance',
-    'version': '20.0.1.0.6',
+    'version': '17.0.1.0.4',
     'category': 'Human Resources/Attendances',
     'summary': 'Face-recognition check-in/out with mood detection and wellbeing alerts',
     'description': """
@@ -19,8 +19,7 @@ Adds a camera-based kiosk to Odoo Attendances:
 
   - raises an activity / notification for HR and the employee's manager
     so a human reviews the situation,
-  - HR can then create and link a leave for the employee if appropriate
-    (this build does not auto-create the leave - see the note below),
+  - can create a draft leave request for the employee to review,
   - can log a small wellbeing incentive for payroll/HR to action.
 
 IMPORTANT - read before deploying
@@ -42,30 +41,6 @@ and legal sign-off before using this for real HR decisions (leave,
 pay, discipline). Treat the "20 sad days" workflow as a *human review
 trigger*, not an automated decision - a person must confirm any leave
 or incentive before it is finalized.
-
-NOTE ON THIS 20.0 BUILD: Odoo 20 had not reached general availability at
-the time this build was prepared, so it targets the 18.0/19.0 view
-conventions Odoo has been converging on (list views, <chatter/>) as the
-closest known approximation. It also does NOT auto-create a leave
-request: hr_holidays' "leave type" concept (hr.leave.type) was being
-restructured in Odoo 20 dev builds, so this build only notifies HR/the
-manager and lets them create and link the leave themselves. On top of
-that, real-install testing found that Odoo 20 dev builds have merged
-the classic ir.model.access / ir.rule security models into a single
-new ir.access model. This module's security data was rewritten against
-that new model and cross-checked against Odoo's own official "account"
-(Invoicing) module source from a real Odoo 20 install, which confirmed
-the exact security/ir.access.csv format used here. Both of these are
-internal, pre-GA Odoo 20 APIs and may still change before the official
-release. See the module's README for details and what to check first
-if an install error appears.
-
-This 20.0 build's technical module name is the same as the 17.0 build
-(hr_face_mood_attendance) - matching how Odoo's own official modules
-never encode the Odoo series in the technical name, only in the
-manifest 'version' field. Keep the 17.0 and 20.0 builds in separate
-addons paths / git branches, never installed side by side under the
-same name on one database.
 """,
     'author': 'Allam Bushra',
     'website': 'https://www.linkedin.com/in/lomixyz/',
@@ -73,7 +48,8 @@ same name on one database.
     'depends': ['hr_attendance', 'hr_holidays', 'mail'],
     'data': [
         'security/hr_face_mood_security.xml',
-        'security/ir.access.csv',
+        'security/ir.model.access.csv',
+        'data/hr_mood_data.xml',
         'data/ir_cron.xml',
         'views/hr_employee_views.xml',
         'views/hr_attendance_views.xml',

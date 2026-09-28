@@ -10,4 +10,10 @@
             for other employees.</field>
     </record>
 
+    <record id="hr_mood_incentive_rule_company" model="ir.rule">
+        <field name="name">Wellbeing trigger: multi-company</field>
+        <field name="model_id" ref="model_hr_mood_incentive"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
 </odoo>

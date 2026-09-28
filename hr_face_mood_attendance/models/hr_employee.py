@@ -177,29 +177,37 @@ class HrEmployee(models.Model):
             })
 
     def _mood_trigger_wellbeing_workflow(self, streak):
-        """Human-in-the-loop wellbeing workflow: notify HR/manager and log a
-        proposed incentive record. Nothing here is auto-approved.
-
-        NOTE (Odoo 20 build): earlier builds of this module could also
-        auto-create a draft hr.leave, pointing it at a company-configured
-        hr.leave.type. That model was being restructured in Odoo 20 dev
-        builds (its "leave type" concept was merging with hr.work.entry.type
-        under a new hr.time.rule model) at the time this build was
-        prepared, so auto-creating a leave here would depend on an
-        internal API that hadn't stabilized yet. To keep this build
-        install-safe regardless of exactly how that lands, it no longer
-        creates the leave automatically - HR creates it themselves (any
-        leave type) and can link it on the incentive record below."""
+        """Human-in-the-loop wellbeing workflow: notify HR/manager, propose
+        a draft leave request, and log a proposed incentive. Nothing here
+        is auto-approved - everything lands as a draft/activity for a
+        person to review."""
         self.ensure_one()
         company = self.company_id or self.env.company
         _logger.info(
             "Mood wellbeing workflow triggered for employee %s after %s "
             "consecutive sad days.", self.name, streak)
 
+        leave = self.env['hr.leave']
+        if company.mood_leave_type_id:
+            try:
+                leave = self.env['hr.leave'].sudo().create({
+                    'employee_id': self.id,
+                    'holiday_status_id': company.mood_leave_type_id.id,
+                    'request_date_from': fields.Date.today(),
+                    'request_date_to': fields.Date.today(),
+                    'name': _("Wellbeing support - suggested after %s consecutive "
+                              "days of low mood. Please review with the "
+                              "employee before confirming.") % streak,
+                })
+            except Exception:
+                _logger.exception(
+                    "Could not auto-create a draft wellbeing leave for %s", self.name)
+
         incentive = self.env['hr.mood.incentive'].sudo().create({
             'employee_id': self.id,
             'trigger_date': fields.Date.today(),
             'streak_days': streak,
+            'leave_id': leave.id if leave else False,
             'incentive_amount': company.mood_incentive_amount,
             'company_id': company.id,
         })
@@ -216,12 +224,14 @@ class HrEmployee(models.Model):
         note = _(
             "%(name)s has had a dominantly low/sad mood at check-in or "
             "check-out for %(streak)s consecutive attended days.\n"
-            "Please check in with them. If time off or an incentive is "
-            "appropriate, create it yourself and link the leave on this "
-            "wellbeing record - nothing has been created automatically."
+            "Please check in with them. A draft wellbeing leave %(leave)s "
+            "and a suggested incentive have been prepared for your review; "
+            "nothing has been confirmed automatically."
         ) % {
             'name': self.name,
             'streak': streak,
+            'leave': leave.display_name if leave else _("(not created - no "
+                                                          "wellbeing leave type configured)"),
         }
         for user in recipients:
             incentive.activity_schedule(

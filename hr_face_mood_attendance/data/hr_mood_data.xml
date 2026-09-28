@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="hr_leave_type_mood_wellbeing" model="hr.leave.type">
+        <field name="name">Wellbeing Support Leave</field>
+        <field name="requires_allocation">no</field>
+        <field name="leave_validation_type">manager</field>
+        <field name="color">11</field>
+    </record>
+
+</odoo>

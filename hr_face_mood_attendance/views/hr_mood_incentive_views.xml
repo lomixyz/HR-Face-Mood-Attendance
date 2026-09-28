@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record id="hr_mood_incentive_view_list" model="ir.ui.view">
-        <field name="name">hr.mood.incentive.list</field>
+    <record id="hr_mood_incentive_view_tree" model="ir.ui.view">
+        <field name="name">hr.mood.incentive.tree</field>
         <field name="model">hr.mood.incentive</field>
         <field name="arch" type="xml">
-            <list decoration-muted="state == 'dismissed'" decoration-success="state == 'reviewed'">
+            <tree decoration-muted="state == 'dismissed'" decoration-success="state == 'reviewed'">
                 <field name="trigger_date"/>
                 <field name="employee_id"/>
                 <field name="streak_days"/>
                 <field name="leave_id"/>
                 <field name="incentive_amount"/>
                 <field name="state"/>
-            </list>
+            </tree>
         </field>
     </record>
 
@@ -48,7 +48,11 @@
                         </group>
                     </group>
                 </sheet>
-                <chatter/>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
             </form>
         </field>
     </record>
@@ -56,7 +60,7 @@
     <record id="hr_mood_incentive_action" model="ir.actions.act_window">
         <field name="name">Wellbeing Triggers</field>
         <field name="res_model">hr.mood.incentive</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">tree,form</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 No wellbeing triggers yet.

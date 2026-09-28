@@ -3,7 +3,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 20.0\n"
+"Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -124,17 +124,27 @@ msgstr "لم يتم التقاط بصمة وجه صالحة."
 
 #. module: hr_face_mood_attendance
 #: code:addons/hr_face_mood_attendance/models/hr_employee.py:0
+msgid "Wellbeing support - suggested after %s consecutive days of low mood. Please review with the employee before confirming."
+msgstr "دعم معنوي - مقترح بعد %s يوم عمل متتالي بحالة مزاجية منخفضة. يرجى المراجعة مع الموظف قبل التأكيد."
+
+#. module: hr_face_mood_attendance
+#: code:addons/hr_face_mood_attendance/models/hr_employee.py:0
+msgid "(not created - no wellbeing leave type configured)"
+msgstr "(لم تُنشأ - لا يوجد نوع إجازة معنوية مُهيّأ)"
+
+#. module: hr_face_mood_attendance
+#: code:addons/hr_face_mood_attendance/models/hr_employee.py:0
 msgid ""
 "%(name)s has had a dominantly low/sad mood at check-in or "
 "check-out for %(streak)s consecutive attended days.\n"
-"Please check in with them. If time off or an incentive is "
-"appropriate, create it yourself and link the leave on this "
-"wellbeing record - nothing has been created automatically."
+"Please check in with them. A draft wellbeing leave %(leave)s "
+"and a suggested incentive have been prepared for your review; "
+"nothing has been confirmed automatically."
 msgstr ""
 "لوحظ أن الحالة المزاجية لـ %(name)s كانت سلبية/حزينة بشكل غالب عند تسجيل الدخول أو الخروج "
 "لمدة %(streak)s يوم عمل متتالي.\n"
-"يرجى التواصل مع الموظف للاطمئنان عليه. إذا كانت إجازة أو حافز مناسباً، "
-"قم بإنشائه بنفسك وربط الإجازة بسجل المتابعة هذا - لم يتم إنشاء أي شيء تلقائياً."
+"يرجى التواصل مع الموظف للاطمئنان عليه. تم تجهيز مسودة إجازة معنوية %(leave)s "
+"وحافز مقترح لمراجعتك؛ لم يتم تأكيد أي شيء تلقائياً."
 
 #. module: hr_face_mood_attendance
 #: code:addons/hr_face_mood_attendance/models/hr_employee.py:0
@@ -192,6 +202,16 @@ msgid "Minimum confidence (0 to 1) the browser's expression model must report be
 msgstr "الحد الأدنى لنسبة الثقة (من 0 إلى 1) التي يجب أن يبلغ عنها نموذج تحليل التعابير في المتصفح حتى تُحتسب قراءة المزاج ضمن سلسلة الأيام."
 
 #. module: hr_face_mood_attendance
+#: model:ir.model.fields,field_description:hr_face_mood_attendance.field_res_company__mood_leave_type_id
+msgid "Wellbeing Leave Type"
+msgstr "نوع الإجازة المعنوية"
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,help:hr_face_mood_attendance.field_res_company__mood_leave_type_id
+msgid "Leave type used when auto-creating a draft leave request for an employee who hits the sad-streak threshold. Leave empty to skip automatic leave creation and only notify HR / the manager."
+msgstr "نوع الإجازة المستخدم عند إنشاء مسودة طلب إجازة تلقائياً لموظف وصل إلى حد سلسلة أيام الحزن. اتركه فارغاً لتخطي الإنشاء التلقائي والاكتفاء بإشعار إدارة الموارد البشرية/المدير."
+
+#. module: hr_face_mood_attendance
 #: model:ir.model.fields,field_description:hr_face_mood_attendance.field_res_company__mood_incentive_amount
 msgid "Wellbeing Incentive Amount"
 msgstr "قيمة حافز المتابعة المعنوية"
@@ -233,13 +253,13 @@ msgstr "أيام الحزن المتتالية"
 
 #. module: hr_face_mood_attendance
 #: model:ir.model.fields,field_description:hr_face_mood_attendance.field_hr_mood_incentive__leave_id
-msgid "Linked Leave"
-msgstr "الإجازة المرتبطة"
+msgid "Draft Wellbeing Leave"
+msgstr "مسودة إجازة معنوية"
 
 #. module: hr_face_mood_attendance
 #: model:ir.model.fields,help:hr_face_mood_attendance.field_hr_mood_incentive__leave_id
-msgid "Optional: if HR/the manager decides time off is appropriate, create the leave yourself (any leave type) and link it here for traceability. This module does not create or confirm any leave automatically."
-msgstr "اختياري: إذا قررت إدارة الموارد البشرية/المدير أن منح إجازة مناسب، قم بإنشاء الإجازة بنفسك (أي نوع إجازة) وقم بربطها هنا للتوثيق. هذا الموديول لا يقوم بإنشاء أو تأكيد أي إجازة تلقائياً."
+msgid "Draft leave request proposed for the employee. Still needs to be reviewed and confirmed by HR/the manager like any other leave request."
+msgstr "طلب إجازة تم اقتراحه للموظف كمسودة. لا يزال بحاجة إلى مراجعة وتأكيد من إدارة الموارد البشرية/المدير مثل أي طلب إجازة آخر."
 
 #. module: hr_face_mood_attendance
 #: model:ir.model.fields,field_description:hr_face_mood_attendance.field_hr_mood_incentive__incentive_amount
@@ -448,3 +468,8 @@ msgid ""
 "Look straight at the camera in good light, then click capture.\n"
 "            This replaces any previously enrolled face."
 msgstr "انظر مباشرة إلى الكاميرا في إضاءة جيدة، ثم اضغط على التقاط. سيحل هذا محل أي وجه مسجّل سابقاً."
+
+#. module: hr_face_mood_attendance
+#: model:hr.leave.type,name:hr_face_mood_attendance.hr_leave_type_mood_wellbeing
+msgid "Wellbeing Support Leave"
+msgstr "إجازة الدعم المعنوي"

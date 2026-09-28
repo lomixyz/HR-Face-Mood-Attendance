@@ -14,6 +14,7 @@
                 <group string="Face &amp; Mood Attendance" name="mood_attendance">
                     <field name="mood_sad_threshold_days"/>
                     <field name="mood_confidence_threshold"/>
+                    <field name="mood_leave_type_id"/>
                     <field name="mood_incentive_amount"/>
                     <field name="mood_kiosk_model_url"/>
                 </group>

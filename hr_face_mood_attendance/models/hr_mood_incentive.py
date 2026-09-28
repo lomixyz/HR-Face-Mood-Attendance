@@ -16,11 +16,10 @@ class HrMoodIncentive(models.Model):
         tracking=True)
     streak_days = fields.Integer(string='Consecutive Sad Days', tracking=True)
     leave_id = fields.Many2one(
-        'hr.leave', string='Linked Leave', copy=False,
-        help="Optional: if HR/the manager decides time off is appropriate, "
-             "create the leave yourself (any leave type) and link it here "
-             "for traceability. This module does not create or confirm any "
-             "leave automatically.")
+        'hr.leave', string='Draft Wellbeing Leave', copy=False,
+        help="Draft leave request proposed for the employee. Still needs to "
+             "be reviewed and confirmed by HR/the manager like any other "
+             "leave request.")
     incentive_amount = fields.Float(
         string='Suggested Incentive Amount',
         help="Proposed amount for HR/payroll to review - not posted to "
