@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_employee_view_form_mood" model="ir.ui.view">
+        <field name="name">hr.employee.form.mood.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Face ID &amp; Mood" name="mood_attendance">
+                    <group>
+                        <group string="Consent">
+                            <field name="mood_consent"/>
+                            <field name="mood_consent_date" readonly="1"/>
+                        </group>
+                        <group string="Face Enrollment">
+                            <field name="face_is_enrolled" readonly="1"/>
+                            <field name="face_enrolled_on" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Wellbeing Streak">
+                        <field name="mood_consecutive_sad_days" readonly="1"/>
+                        <field name="mood_streak_action_taken" readonly="1"/>
+                        <field name="mood_last_action_date" readonly="1"/>
+                    </group>
+                    <div class="alert alert-info" role="alert" invisible="not mood_consent">
+                        The employee enrolls their own face from
+                        <strong>Attendances &#8594; My Face ID</strong> after ticking
+                        consent here - face descriptors are never captured or
+                        uploaded from this backend form.
+                    </div>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+</odoo>

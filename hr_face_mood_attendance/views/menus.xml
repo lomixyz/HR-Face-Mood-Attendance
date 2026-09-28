@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_mood_enroll_page" model="ir.actions.act_url">
+        <field name="name">My Face ID</field>
+        <field name="url">/hr_face_mood/enroll_page</field>
+        <field name="target">self</field>
+    </record>
+
+    <record id="action_mood_kiosk_page" model="ir.actions.act_url">
+        <field name="name">Face &amp; Mood Kiosk</field>
+        <field name="url">/hr_face_mood/kiosk</field>
+        <field name="target">self</field>
+    </record>
+
+    <menuitem id="menu_mood_enroll"
+              name="My Face ID"
+              parent="hr_attendance.menu_hr_attendance_root"
+              action="action_mood_enroll_page"
+              sequence="50"/>
+
+    <menuitem id="menu_mood_kiosk"
+              name="Face &amp; Mood Kiosk"
+              parent="hr_attendance.menu_hr_attendance_root"
+              action="action_mood_kiosk_page"
+              groups="hr.group_hr_user,hr_face_mood_attendance.group_mood_kiosk_user"
+              sequence="51"/>
+
+    <menuitem id="menu_mood_incentive"
+              name="Wellbeing Triggers"
+              parent="hr_attendance.menu_hr_attendance_root"
+              action="hr_mood_incentive_action"
+              groups="hr.group_hr_user"
+              sequence="52"/>
+
+</odoo>

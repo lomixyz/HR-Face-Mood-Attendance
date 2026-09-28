@@ -1,0 +1,4 @@
+id,name,model_id,group_id/id,operation,domain
+access_hr_mood_incentive_user,hr.mood.incentive.user,hr.mood.incentive,hr.group_hr_user,cru,
+access_hr_mood_incentive_manager,hr.mood.incentive.manager,hr.mood.incentive,hr.group_hr_manager,crud,
+hr_mood_incentive_comp_rule,Wellbeing trigger multi-company,hr.mood.incentive,,crud,"['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]"

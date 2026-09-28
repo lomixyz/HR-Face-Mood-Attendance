@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_attendance_view_list_mood" model="ir.ui.view">
+        <field name="name">hr.attendance.list.mood.inherit</field>
+        <field name="model">hr.attendance</field>
+        <!-- NOTE (Odoo 20 build): the <tree>/<list> tag itself was renamed
+             starting Odoo 18.0, but confirmed by real-install testing on
+             this user's Odoo 20.0.20260924 build that the standard
+             attendance list view's external ID is STILL
+             hr_attendance.view_attendance_tree (it was not renamed to
+             view_attendance_list on this build). If a future Odoo 20
+             update renames it, open Settings > Technical > Views, search
+             "Attendances", find the base list view for hr.attendance,
+             and swap the ref below for its actual external ID. -->
+        <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+        <field name="arch" type="xml">
+            <field name="check_out" position="after">
+                <field name="mood_check_in" optional="show"/>
+                <field name="mood_check_out" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="hr_attendance_view_form_mood" model="ir.ui.view">
+        <field name="name">hr.attendance.form.mood.inherit</field>
+        <field name="model">hr.attendance</field>
+        <!-- Same caution as above applies here if this exact form view ID
+             has moved; form view IDs are historically far more stable
+             than list/tree ones though. -->
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form"/>
+        <field name="arch" type="xml">
+            <field name="check_out" position="after">
+                <field name="mood_check_in" readonly="1"/>
+                <field name="mood_check_in_confidence" readonly="1"/>
+                <field name="mood_check_out" readonly="1"/>
+                <field name="mood_check_out_confidence" readonly="1"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,450 @@
+# Translation of hr_face_mood_attendance
+# Arabic translation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 20.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n=0?0:n=1?1:n=2?2:n%100>=3 && n%100<=10?3:n%100>=11 && n%100<=99?4:5;\n"
+"Language: ar\n"
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,field_description:hr_face_mood_attendance.field_hr_employee__mood_consent
+msgid "Consents to Face ID & Mood Detection"
+msgstr "موافقة على التعرف على الوجه وقراءة المزاج"
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,help:hr_face_mood_attendance.field_hr_employee__mood_consent
+msgid "The employee has explicitly agreed to have their face used for attendance recognition and to have their facial expression read at check-in/out to estimate mood. No face data is captured, matched or scored until this is checked."
+msgstr "وافق الموظف صراحة على استخدام وجهه للتعرف عليه لتسجيل الحضور، وعلى قراءة تعابير وجهه عند تسجيل الدخول/الخروج لتقدير المزاج. لن يتم التقاط أو مطابقة أو تقييم أي بيانات للوجه قبل تفعيل هذا الخيار."
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,field_description:hr_face_mood_attendance.field_hr_employee__mood_consent_date
+msgid "Consent Given On"
+msgstr "تاريخ الموافقة"
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,field_description:hr_face_mood_attendance.field_hr_employee__face_descriptor
+msgid "Face Descriptor"
+msgstr "بصمة الوجه (Descriptor)"
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,help:hr_face_mood_attendance.field_hr_employee__face_descriptor
+msgid "Mathematical representation (128-d vector, JSON encoded) of the employee's face, computed in the browser. This is NOT a photo and cannot be used to reconstruct one, but it is still biometric data - treat it as sensitive."
+msgstr "تمثيل رياضي (متجه من 128 رقماً، بصيغة JSON) لوجه الموظف، يُحسب داخل المتصفح. هذا ليس صورة فوتوغرافية ولا يمكن استخدامه لإعادة بناء صورة، لكنه يبقى بيانات بيومترية حساسة ويجب التعامل معه على هذا الأساس."
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,field_description:hr_face_mood_attendance.field_hr_employee__face_enrolled_on
+msgid "Face Enrolled On"
+msgstr "تاريخ تسجيل الوجه"
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,field_description:hr_face_mood_attendance.field_hr_employee__face_is_enrolled
+msgid "Face Enrolled"
+msgstr "تم تسجيل الوجه"
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,field_description:hr_face_mood_attendance.field_hr_employee__mood_consecutive_sad_days
+msgid "Consecutive Sad Days"
+msgstr "أيام الحزن المتتالية"
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,help:hr_face_mood_attendance.field_hr_employee__mood_consecutive_sad_days
+msgid "Number of consecutive attended days, ending on the most recent attendance, whose dominant recorded mood was 'sad'."
+msgstr "عدد أيام الحضور المتتالية، وصولاً إلى آخر حضور، التي كانت الحالة المزاجية السائدة المسجّلة فيها \"حزين\"."
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,field_description:hr_face_mood_attendance.field_hr_employee__mood_streak_action_taken
+msgid "Wellbeing Workflow Already Triggered"
+msgstr "تم تفعيل مسار متابعة الحالة المعنوية بالفعل"
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,help:hr_face_mood_attendance.field_hr_employee__mood_streak_action_taken
+msgid "Prevents the wellbeing workflow (notification / draft leave / incentive) from firing again every day once the threshold has been reached; it resets automatically once the streak breaks."
+msgstr "يمنع تكرار تفعيل مسار متابعة الحالة المعنوية (إشعار / إجازة / حافز) كل يوم بعد الوصول إلى الحد المحدد؛ ويُعاد ضبطه تلقائياً بمجرد انقطاع سلسلة الأيام."
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,field_description:hr_face_mood_attendance.field_hr_employee__mood_last_action_date
+msgid "Wellbeing Workflow Last Triggered On"
+msgstr "آخر تاريخ لتفعيل مسار متابعة الحالة المعنوية"
+
+#. module: hr_face_mood_attendance
+#: selection:hr.attendance,mood_check_in:0
+#: selection:hr.attendance,mood_check_out:0
+msgid "Happy"
+msgstr "سعيد"
+
+#. module: hr_face_mood_attendance
+#: selection:hr.attendance,mood_check_in:0
+#: selection:hr.attendance,mood_check_out:0
+msgid "Sad"
+msgstr "حزين"
+
+#. module: hr_face_mood_attendance
+#: selection:hr.attendance,mood_check_in:0
+#: selection:hr.attendance,mood_check_out:0
+msgid "Angry"
+msgstr "غاضب"
+
+#. module: hr_face_mood_attendance
+#: selection:hr.attendance,mood_check_in:0
+#: selection:hr.attendance,mood_check_out:0
+msgid "Fearful"
+msgstr "خائف"
+
+#. module: hr_face_mood_attendance
+#: selection:hr.attendance,mood_check_in:0
+#: selection:hr.attendance,mood_check_out:0
+msgid "Disgusted"
+msgstr "مشمئز"
+
+#. module: hr_face_mood_attendance
+#: selection:hr.attendance,mood_check_in:0
+#: selection:hr.attendance,mood_check_out:0
+msgid "Surprised"
+msgstr "متفاجئ"
+
+#. module: hr_face_mood_attendance
+#: selection:hr.attendance,mood_check_in:0
+#: selection:hr.attendance,mood_check_out:0
+msgid "Neutral"
+msgstr "محايد"
+
+#. module: hr_face_mood_attendance
+#: code:addons/hr_face_mood_attendance/models/hr_employee.py:0
+msgid "You need to give your consent to face recognition and mood detection before enrolling your face."
+msgstr "يجب عليك الموافقة على التعرف على الوجه وقراءة المزاج قبل تسجيل وجهك."
+
+#. module: hr_face_mood_attendance
+#: code:addons/hr_face_mood_attendance/models/hr_employee.py:0
+msgid "No valid face descriptor was captured."
+msgstr "لم يتم التقاط بصمة وجه صالحة."
+
+#. module: hr_face_mood_attendance
+#: code:addons/hr_face_mood_attendance/models/hr_employee.py:0
+msgid ""
+"%(name)s has had a dominantly low/sad mood at check-in or "
+"check-out for %(streak)s consecutive attended days.\n"
+"Please check in with them. If time off or an incentive is "
+"appropriate, create it yourself and link the leave on this "
+"wellbeing record - nothing has been created automatically."
+msgstr ""
+"لوحظ أن الحالة المزاجية لـ %(name)s كانت سلبية/حزينة بشكل غالب عند تسجيل الدخول أو الخروج "
+"لمدة %(streak)s يوم عمل متتالي.\n"
+"يرجى التواصل مع الموظف للاطمئنان عليه. إذا كانت إجازة أو حافز مناسباً، "
+"قم بإنشائه بنفسك وربط الإجازة بسجل المتابعة هذا - لم يتم إنشاء أي شيء تلقائياً."
+
+#. module: hr_face_mood_attendance
+#: code:addons/hr_face_mood_attendance/models/hr_employee.py:0
+msgid "Wellbeing check-in needed: %s"
+msgstr "مطلوب الاطمئنان على الحالة المعنوية: %s"
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,field_description:hr_face_mood_attendance.field_hr_attendance__mood_check_in
+msgid "Mood at Check-In"
+msgstr "الحالة المزاجية عند تسجيل الدخول"
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,help:hr_face_mood_attendance.field_hr_attendance__mood_check_in
+msgid "Dominant facial expression read by the kiosk at check-in time."
+msgstr "تعبير الوجه السائد الذي رصده الكشك عند وقت تسجيل الدخول."
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,field_description:hr_face_mood_attendance.field_hr_attendance__mood_check_in_confidence
+msgid "Check-In Mood Confidence"
+msgstr "نسبة الثقة في مزاج تسجيل الدخول"
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,help:hr_face_mood_attendance.field_hr_attendance__mood_check_in_confidence
+msgid "Confidence (0 to 1) reported by the browser's expression model."
+msgstr "نسبة الثقة (من 0 إلى 1) التي أبلغ عنها نموذج تحليل التعابير في المتصفح."
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,field_description:hr_face_mood_attendance.field_hr_attendance__mood_check_out
+msgid "Mood at Check-Out"
+msgstr "الحالة المزاجية عند تسجيل الخروج"
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,field_description:hr_face_mood_attendance.field_hr_attendance__mood_check_out_confidence
+msgid "Check-Out Mood Confidence"
+msgstr "نسبة الثقة في مزاج تسجيل الخروج"
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,field_description:hr_face_mood_attendance.field_res_company__mood_sad_threshold_days
+msgid "Consecutive Sad Days Threshold"
+msgstr "حد أيام الحزن المتتالية"
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,help:hr_face_mood_attendance.field_res_company__mood_sad_threshold_days
+msgid "Number of consecutive attended days with a dominant 'sad' mood before the wellbeing workflow (notification / draft leave / incentive) is triggered for an employee."
+msgstr "عدد أيام الحضور المتتالية بحالة مزاجية \"حزينة\" سائدة قبل تفعيل مسار متابعة الحالة المعنوية (إشعار / إجازة / حافز) للموظف."
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,field_description:hr_face_mood_attendance.field_res_company__mood_confidence_threshold
+msgid "Mood Confidence Threshold"
+msgstr "حد الثقة في قراءة المزاج"
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,help:hr_face_mood_attendance.field_res_company__mood_confidence_threshold
+msgid "Minimum confidence (0 to 1) the browser's expression model must report before a mood reading counts towards the streak."
+msgstr "الحد الأدنى لنسبة الثقة (من 0 إلى 1) التي يجب أن يبلغ عنها نموذج تحليل التعابير في المتصفح حتى تُحتسب قراءة المزاج ضمن سلسلة الأيام."
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,field_description:hr_face_mood_attendance.field_res_company__mood_incentive_amount
+msgid "Wellbeing Incentive Amount"
+msgstr "قيمة حافز المتابعة المعنوية"
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,help:hr_face_mood_attendance.field_res_company__mood_incentive_amount
+msgid "Suggested amount to log on the wellbeing incentive record when the threshold is hit. This does NOT post anything to payroll automatically - it is a proposal for HR/payroll to review and apply manually (e.g. as a payslip input)."
+msgstr "المبلغ المقترح تسجيله في سجل حافز المتابعة المعنوية عند بلوغ الحد المحدد. لا يتم ترحيل أي شيء تلقائياً إلى الرواتب - هذا مجرد اقتراح تراجعه إدارة الموارد البشرية/الرواتب وتطبقه يدوياً (مثلاً كمدخل في مسير الراتب)."
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,field_description:hr_face_mood_attendance.field_res_company__mood_kiosk_model_url
+msgid "Face/Mood Model URL"
+msgstr "رابط نموذج التعرف على الوجه/المزاج"
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,help:hr_face_mood_attendance.field_res_company__mood_kiosk_model_url
+msgid "Base URL the kiosk page loads the face-api.js AI model weights from. Defaults to a public CDN. For an offline/on-premise deployment, host the weights yourself (see module README) and point this at that URL instead."
+msgstr "الرابط الأساسي الذي تحمّل منه صفحة الكشك أوزان نموذج الذكاء الاصطناعي face-api.js. القيمة الافتراضية هي شبكة توزيع محتوى عامة (CDN). للنشر دون اتصال بالإنترنت/على خوادم داخلية، استضف الأوزان بنفسك (راجع ملف README الخاص بالموديول) ووجّه هذا الحقل إلى ذلك الرابط."
+
+#. module: hr_face_mood_attendance
+#: model:ir.model,name:hr_face_mood_attendance.model_hr_mood_incentive
+msgid "Wellbeing Workflow Trigger (Mood Streak)"
+msgstr "مُحفّز مسار المتابعة المعنوية (سلسلة المزاج)"
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,field_description:hr_face_mood_attendance.field_hr_mood_incentive__employee_id
+msgid "Employee"
+msgstr "الموظف"
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,field_description:hr_face_mood_attendance.field_hr_mood_incentive__trigger_date
+msgid "Triggered On"
+msgstr "تاريخ التفعيل"
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,field_description:hr_face_mood_attendance.field_hr_mood_incentive__streak_days
+msgid "Consecutive Sad Days"
+msgstr "أيام الحزن المتتالية"
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,field_description:hr_face_mood_attendance.field_hr_mood_incentive__leave_id
+msgid "Linked Leave"
+msgstr "الإجازة المرتبطة"
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,help:hr_face_mood_attendance.field_hr_mood_incentive__leave_id
+msgid "Optional: if HR/the manager decides time off is appropriate, create the leave yourself (any leave type) and link it here for traceability. This module does not create or confirm any leave automatically."
+msgstr "اختياري: إذا قررت إدارة الموارد البشرية/المدير أن منح إجازة مناسب، قم بإنشاء الإجازة بنفسك (أي نوع إجازة) وقم بربطها هنا للتوثيق. هذا الموديول لا يقوم بإنشاء أو تأكيد أي إجازة تلقائياً."
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,field_description:hr_face_mood_attendance.field_hr_mood_incentive__incentive_amount
+msgid "Suggested Incentive Amount"
+msgstr "قيمة الحافز المقترحة"
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,help:hr_face_mood_attendance.field_hr_mood_incentive__incentive_amount
+msgid "Proposed amount for HR/payroll to review - not posted to payroll automatically."
+msgstr "المبلغ المقترح لتراجعه إدارة الموارد البشرية/الرواتب - لا يُرحّل تلقائياً إلى الرواتب."
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,field_description:hr_face_mood_attendance.field_hr_mood_incentive__incentive_note
+msgid "Incentive Note"
+msgstr "ملاحظة الحافز"
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,field_description:hr_face_mood_attendance.field_hr_mood_incentive__state
+msgid "Status"
+msgstr "الحالة"
+
+#. module: hr_face_mood_attendance
+#: selection:hr.mood.incentive,state:0
+msgid "Needs Review"
+msgstr "بحاجة إلى مراجعة"
+
+#. module: hr_face_mood_attendance
+#: selection:hr.mood.incentive,state:0
+msgid "Reviewed"
+msgstr "تمت المراجعة"
+
+#. module: hr_face_mood_attendance
+#: selection:hr.mood.incentive,state:0
+msgid "Dismissed"
+msgstr "تم الإغلاق"
+
+#. module: hr_face_mood_attendance
+#: model:ir.model.fields,field_description:hr_face_mood_attendance.field_hr_mood_incentive__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: hr_face_mood_attendance
+#: model_terms:ir.ui.view,arch_db:hr_face_mood_attendance.hr_mood_incentive_view_form
+msgid "Mark Reviewed"
+msgstr "وضع علامة تمت المراجعة"
+
+#. module: hr_face_mood_attendance
+#: model_terms:ir.ui.view,arch_db:hr_face_mood_attendance.hr_mood_incentive_view_form
+msgid "Dismiss"
+msgstr "إغلاق"
+
+#. module: hr_face_mood_attendance
+#: model_terms:ir.ui.view,arch_db:hr_face_mood_attendance.hr_mood_incentive_view_form
+msgid ""
+"This is a suggestion for a human to review, not an\n"
+"                        automated decision. Confirm the leave request and any\n"
+"                        incentive with the employee and their manager before\n"
+"                        acting on it."
+msgstr "هذا مجرد اقتراح يحتاج إلى مراجعة بشرية، وليس قراراً آلياً. يرجى تأكيد طلب الإجازة وأي حافز مع الموظف ومديره المباشر قبل اتخاذ أي إجراء."
+
+#. module: hr_face_mood_attendance
+#: model:ir.actions.act_window,name:hr_face_mood_attendance.hr_mood_incentive_action
+msgid "Wellbeing Triggers"
+msgstr "محفزات المتابعة المعنوية"
+
+#. module: hr_face_mood_attendance
+#: model_terms:ir.actions.act_window,help:hr_face_mood_attendance.hr_mood_incentive_action
+msgid "No wellbeing triggers yet."
+msgstr "لا توجد محفزات متابعة معنوية بعد."
+
+#. module: hr_face_mood_attendance
+#: model_terms:ir.actions.act_window,help:hr_face_mood_attendance.hr_mood_incentive_action
+msgid "Records here appear automatically when an employee's mood has been dominantly low for enough consecutive attended days."
+msgstr "تظهر السجلات هنا تلقائياً عندما تكون الحالة المزاجية للموظف منخفضة بشكل سائد لعدد كافٍ من أيام الحضور المتتالية."
+
+#. module: hr_face_mood_attendance
+#: model_terms:ir.ui.view,arch_db:hr_face_mood_attendance.hr_employee_view_form_mood
+msgid "Face ID &amp; Mood"
+msgstr "بصمة الوجه والمزاج"
+
+#. module: hr_face_mood_attendance
+#: model_terms:ir.ui.view,arch_db:hr_face_mood_attendance.hr_employee_view_form_mood
+msgid "Consent"
+msgstr "الموافقة"
+
+#. module: hr_face_mood_attendance
+#: model_terms:ir.ui.view,arch_db:hr_face_mood_attendance.hr_employee_view_form_mood
+msgid "Face Enrollment"
+msgstr "تسجيل الوجه"
+
+#. module: hr_face_mood_attendance
+#: model_terms:ir.ui.view,arch_db:hr_face_mood_attendance.hr_employee_view_form_mood
+msgid "Wellbeing Streak"
+msgstr "سلسلة الحالة المعنوية"
+
+#. module: hr_face_mood_attendance
+#: model_terms:ir.ui.view,arch_db:hr_face_mood_attendance.hr_employee_view_form_mood
+msgid ""
+"The employee enrolls their own face from\n"
+"                        <strong>Attendances &amp;#8594; My Face ID</strong> after ticking\n"
+"                        consent here - face descriptors are never captured or\n"
+"                        uploaded from this backend form."
+msgstr "يقوم الموظف بتسجيل وجهه بنفسه من قائمة الحضور والانصراف ← بصمة وجهي بعد تفعيل الموافقة هنا - لا يتم التقاط أو رفع أي بصمة وجه من هذه الشاشة الخلفية أبداً."
+
+#. module: hr_face_mood_attendance
+#: model:ir.actions.act_url,name:hr_face_mood_attendance.action_mood_enroll_page
+#: model:ir.ui.menu,name:hr_face_mood_attendance.menu_mood_enroll
+msgid "My Face ID"
+msgstr "بصمة وجهي"
+
+#. module: hr_face_mood_attendance
+#: model:ir.actions.act_url,name:hr_face_mood_attendance.action_mood_kiosk_page
+#: model:ir.ui.menu,name:hr_face_mood_attendance.menu_mood_kiosk
+msgid "Face &amp; Mood Kiosk"
+msgstr "كشك تسجيل الوجه والمزاج"
+
+#. module: hr_face_mood_attendance
+#: model:ir.ui.menu,name:hr_face_mood_attendance.menu_mood_incentive
+msgid "Wellbeing Triggers"
+msgstr "محفزات المتابعة المعنوية"
+
+#. module: hr_face_mood_attendance
+#: model:res.groups,name:hr_face_mood_attendance.group_mood_kiosk_user
+msgid "Mood Attendance Kiosk Device"
+msgstr "جهاز كشك حضور المزاج"
+
+#. module: hr_face_mood_attendance
+#: model:res.groups,comment:hr_face_mood_attendance.group_mood_kiosk_user
+msgid ""
+"Technical group: assign this only to the dedicated\n"
+"            user a shared kiosk device (tablet at the entrance) stays logged\n"
+"            in as. It grants no backend access beyond what attendance already\n"
+"            gives - just permission to call the face/mood check-in endpoints\n"
+"            for other employees."
+msgstr "مجموعة تقنية: لا تُسند إلا للمستخدم المخصص الذي يبقى جهاز الكشك المشترك (جهاز لوحي عند المدخل) مسجّلاً به. لا تمنح أي صلاحيات خلفية إضافية عمّا يتيحه نظام الحضور أصلاً - فقط صلاحية استدعاء واجهات تسجيل الدخول/الخروج بالوجه والمزاج لبقية الموظفين."
+
+#. module: hr_face_mood_attendance
+#: model_terms:ir.ui.view,arch_db:hr_face_mood_attendance.res_company_view_form_mood
+msgid "Face &amp; Mood Attendance"
+msgstr "حضور الوجه والمزاج"
+
+#. module: hr_face_mood_attendance
+#: model_terms:ir.ui.view,arch_db:hr_face_mood_attendance.kiosk_page
+msgid "Face &amp; Mood Attendance Kiosk"
+msgstr "كشك حضور الوجه والمزاج"
+
+#. module: hr_face_mood_attendance
+#: model_terms:ir.ui.view,arch_db:hr_face_mood_attendance.kiosk_page
+#: model_terms:ir.ui.view,arch_db:hr_face_mood_attendance.enroll_page
+msgid "← Back to Home"
+msgstr "← العودة للشاشة الرئيسية"
+
+#. module: hr_face_mood_attendance
+#: model_terms:ir.ui.view,arch_db:hr_face_mood_attendance.kiosk_page
+msgid "Look at the camera to check in / check out"
+msgstr "انظر إلى الكاميرا لتسجيل الدخول / الخروج"
+
+#. module: hr_face_mood_attendance
+#: model_terms:ir.ui.view,arch_db:hr_face_mood_attendance.kiosk_page
+msgid "Loading models…"
+msgstr "جارٍ تحميل النماذج…"
+
+#. module: hr_face_mood_attendance
+#: model_terms:ir.ui.view,arch_db:hr_face_mood_attendance.kiosk_page
+msgid ""
+"Only employees who have consented and enrolled their face\n"
+"        will be recognized. Nothing is sent anywhere outside this browser\n"
+"        except the final match result."
+msgstr "لن يتم التعرف إلا على الموظفين الذين وافقوا وسجّلوا وجوههم. لا يتم إرسال أي شيء خارج هذا المتصفح باستثناء نتيجة المطابقة النهائية."
+
+#. module: hr_face_mood_attendance
+#: model_terms:ir.ui.view,arch_db:hr_face_mood_attendance.enroll_page
+msgid "Enroll My Face"
+msgstr "تسجيل وجهي"
+
+#. module: hr_face_mood_attendance
+#: model_terms:ir.ui.view,arch_db:hr_face_mood_attendance.enroll_page
+msgid "Enroll my face"
+msgstr "تسجيل وجهي"
+
+#. module: hr_face_mood_attendance
+#: model_terms:ir.ui.view,arch_db:hr_face_mood_attendance.enroll_page
+msgid "No employee record is linked to your user - ask HR to link one first."
+msgstr "لا يوجد سجل موظف مرتبط بحسابك - يرجى الطلب من إدارة الموارد البشرية ربط سجل أولاً."
+
+#. module: hr_face_mood_attendance
+#: model_terms:ir.ui.view,arch_db:hr_face_mood_attendance.enroll_page
+msgid ""
+"You haven't given consent to face recognition / mood detection yet.\n"
+"           Ask HR to tick consent on your employee record before enrolling."
+msgstr "لم توافق بعد على التعرف على الوجه/قراءة المزاج. يرجى الطلب من إدارة الموارد البشرية تفعيل الموافقة على سجلك قبل التسجيل."
+
+#. module: hr_face_mood_attendance
+#: model_terms:ir.ui.view,arch_db:hr_face_mood_attendance.enroll_page
+msgid "Capture &amp; Save My Face"
+msgstr "التقاط وحفظ وجهي"
+
+#. module: hr_face_mood_attendance
+#: model_terms:ir.ui.view,arch_db:hr_face_mood_attendance.enroll_page
+msgid "Loading…"
+msgstr "جارٍ التحميل…"
+
+#. module: hr_face_mood_attendance
+#: model_terms:ir.ui.view,arch_db:hr_face_mood_attendance.enroll_page
+msgid ""
+"Look straight at the camera in good light, then click capture.\n"
+"            This replaces any previously enrolled face."
+msgstr "انظر مباشرة إلى الكاميرا في إضاءة جيدة، ثم اضغط على التقاط. سيحل هذا محل أي وجه مسجّل سابقاً."

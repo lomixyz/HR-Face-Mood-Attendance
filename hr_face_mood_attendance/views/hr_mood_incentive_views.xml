@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_mood_incentive_view_list" model="ir.ui.view">
+        <field name="name">hr.mood.incentive.list</field>
+        <field name="model">hr.mood.incentive</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="state == 'dismissed'" decoration-success="state == 'reviewed'">
+                <field name="trigger_date"/>
+                <field name="employee_id"/>
+                <field name="streak_days"/>
+                <field name="leave_id"/>
+                <field name="incentive_amount"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="hr_mood_incentive_view_form" model="ir.ui.view">
+        <field name="name">hr.mood.incentive.form</field>
+        <field name="model">hr.mood.incentive</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_mark_reviewed" type="object" string="Mark Reviewed"
+                            class="oe_highlight" invisible="state != 'new'"/>
+                    <button name="action_dismiss" type="object" string="Dismiss"
+                            invisible="state == 'dismissed'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="alert alert-warning" role="alert">
+                        This is a suggestion for a human to review, not an
+                        automated decision. Confirm the leave request and any
+                        incentive with the employee and their manager before
+                        acting on it.
+                    </div>
+                    <group>
+                        <group>
+                            <field name="employee_id"/>
+                            <field name="trigger_date"/>
+                            <field name="streak_days"/>
+                        </group>
+                        <group>
+                            <field name="leave_id"/>
+                            <field name="incentive_amount"/>
+                            <field name="incentive_note"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_mood_incentive_action" model="ir.actions.act_window">
+        <field name="name">Wellbeing Triggers</field>
+        <field name="res_model">hr.mood.incentive</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No wellbeing triggers yet.
+            </p>
+            <p>
+                Records here appear automatically when an employee's mood has
+                been dominantly low for enough consecutive attended days.
+            </p>
+        </field>
+    </record>
+
+</odoo>

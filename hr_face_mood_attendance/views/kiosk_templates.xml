@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="kiosk_page" name="Face &amp; Mood Kiosk">
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Face &amp; Mood Attendance Kiosk</title>
+    <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+    <style>
+        body { font-family: -apple-system, Arial, sans-serif; background:#111827; color:#f9fafb;
+               margin:0; display:flex; flex-direction:column; align-items:center; padding:24px; }
+        h1 { font-size: 20px; font-weight: 600; }
+        #video-wrap { position:relative; width:480px; max-width:90vw; }
+        video, canvas { width:100%; border-radius:12px; }
+        canvas { position:absolute; top:0; left:0; }
+        #status { margin-top:16px; font-size:18px; min-height:28px; text-align:center; }
+        .ok { color:#34d399; } .err { color:#f87171; } .info { color:#93c5fd; }
+        #hint { margin-top:8px; font-size:13px; color:#9ca3af; text-align:center; max-width:480px; }
+        #back-link { position:absolute; top:16px; left:16px; color:#9ca3af; text-decoration:none;
+                     font-size:14px; padding:8px 14px; border:1px solid #374151; border-radius:8px; }
+        #back-link:hover { color:#f9fafb; border-color:#6b7280; }
+    </style>
+</head>
+<body>
+    <a id="back-link" href="/web">&#8592; Back to Home</a>
+    <h1>Look at the camera to check in / check out</h1>
+    <div id="video-wrap">
+        <video id="video" autoplay="autoplay" muted="muted" playsinline="playsinline"></video>
+        <canvas id="overlay"></canvas>
+    </div>
+    <div id="status" class="info">Loading models…</div>
+    <div id="hint">Only employees who have consented and enrolled their face
+        will be recognized. Nothing is sent anywhere outside this browser
+        except the final match result.</div>
+
+    <script type="application/json" id="config" t-att-data-model-url="model_url">{}</script>
+    <script>
+    (function () {
+        var MODEL_URL = document.getElementById('config').getAttribute('data-model-url');
+        var video = document.getElementById('video');
+        var overlay = document.getElementById('overlay');
+        var statusEl = document.getElementById('status');
+        var lastActionAt = {};
+        var COOLDOWN_MS = 8000;
+        var MATCH_DISTANCE = 0.5;
+
+        function setStatus(text, cls) {
+            statusEl.textContent = text;
+            statusEl.className = cls || 'info';
+        }
+
+        function jsonrpc(route, params) {
+            return fetch(route, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ jsonrpc: '2.0', method: 'call', params: params || {}, id: Date.now() }),
+            }).then(function (r) { return r.json(); }).then(function (data) {
+                if (data.error) { throw new Error(data.error.data &amp;&amp; data.error.data.message || 'Server error'); }
+                return data.result;
+            });
+        }
+
+        function dominantExpression(expressions) {
+            var best = null, bestScore = -1;
+            Object.keys(expressions).forEach(function (key) {
+                if (expressions[key] > bestScore) { bestScore = expressions[key]; best = key; }
+            });
+            return { mood: best, confidence: bestScore };
+        }
+
+        async function loadModels() {
+            await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
+            await faceapi.nets.faceLandmark68TinyNet.loadFromUri(MODEL_URL);
+            await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
+            await faceapi.nets.faceExpressionNet.loadFromUri(MODEL_URL);
+        }
+
+        function cameraErrorMessage(e) {
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                return 'This browser/app cannot access the camera (no camera API available).';
+            }
+            var name = e &amp;&amp; e.name;
+            if (name === 'NotAllowedError' || name === 'PermissionDeniedError') {
+                return 'Camera access was denied. Please allow camera permission for this page in your browser/app settings, then reload.';
+            }
+            if (name === 'NotFoundError' || name === 'DevicesNotFoundError') {
+                return 'No camera was found on this device.';
+            }
+            if (name === 'NotReadableError' || name === 'TrackStartError') {
+                return 'The camera is closed, disconnected, or already being used by another app.';
+            }
+            if (name === 'OverconstrainedError' || name === 'ConstraintNotSatisfiedError') {
+                return 'No camera on this device matches the required settings.';
+            }
+            if (name === 'SecurityError') {
+                return 'Camera access is blocked - this page must be opened over HTTPS (or localhost).';
+            }
+            return 'Could not access the camera' + (e &amp;&amp; e.message ? ': ' + e.message : '.');
+        }
+
+        async function startCamera() {
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                throw new Error(cameraErrorMessage());
+            }
+            var stream;
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ video: {} });
+            } catch (e) {
+                throw new Error(cameraErrorMessage(e));
+            }
+            video.srcObject = stream;
+            return new Promise(function (resolve) { video.onloadedmetadata = resolve; });
+        }
+
+        async function buildMatcher() {
+            var employees = await jsonrpc('/hr_face_mood/descriptors', {});
+            if (!employees.length) {
+                setStatus('No enrolled, consenting employees found yet.', 'err');
+                return null;
+            }
+            var labeled = employees.map(function (e) {
+                return new faceapi.LabeledFaceDescriptors(String(e.id), [new Float32Array(e.descriptor)]);
+            });
+            var byId = {};
+            employees.forEach(function (e) { byId[e.id] = e.name; });
+            return { matcher: new faceapi.FaceMatcher(labeled, MATCH_DISTANCE), names: byId };
+        }
+
+        async function loop(matcherData) {
+            var detectorOpts = new faceapi.TinyFaceDetectorOptions();
+            overlay.width = video.clientWidth;
+            overlay.height = video.clientHeight;
+            var busy = false;
+
+            var intervalId = setInterval(async function () {
+                if (busy) { return; }
+                busy = true;
+                var result = await faceapi
+                    .detectSingleFace(video, detectorOpts)
+                    .withFaceLandmarks(true)
+                    .withFaceExpressions()
+                    .withFaceDescriptor();
+
+                var ctx = overlay.getContext('2d');
+                ctx.clearRect(0, 0, overlay.width, overlay.height);
+
+                if (!result) {
+                    setStatus('Looking for a face…', 'info');
+                    busy = false;
+                    return;
+                }
+
+                var match = matcherData.matcher.findBestMatch(result.descriptor);
+                if (match.label === 'unknown') {
+                    setStatus('Face not recognized.', 'err');
+                    busy = false;
+                    return;
+                }
+
+                var employeeId = match.label;
+                var now = Date.now();
+                if (lastActionAt[employeeId] &amp;&amp; (now - lastActionAt[employeeId]) &lt; COOLDOWN_MS) {
+                    setStatus('Hi ' + matcherData.names[employeeId] + ', already recorded - thanks!', 'ok');
+                    busy = false;
+                    return;
+                }
+
+                var exp = dominantExpression(result.expressions);
+                setStatus('Recognized ' + matcherData.names[employeeId] + '… recording ' + exp.mood + '…', 'info');
+
+                try {
+                    var res = await jsonrpc('/hr_face_mood/attendance', {
+                        employee_id: employeeId,
+                        mood: exp.mood,
+                        confidence: exp.confidence,
+                        match_distance: match.distance,
+                    });
+                    if (res.success) {
+                        lastActionAt[employeeId] = now;
+                        var verb = res.action === 'check_in' ? 'checked in' : 'checked out';
+                        setStatus(res.employee_name + ' ' + verb + ' (' + exp.mood + ')… Returning to Home…', 'ok');
+                        clearInterval(intervalId);
+                        setTimeout(function () { window.location.href = '/web'; }, 1500);
+                        return;
+                    } else {
+                        setStatus(res.error || 'Could not record attendance.', 'err');
+                    }
+                } catch (e) {
+                    setStatus('Error: ' + e.message, 'err');
+                }
+                busy = false;
+            }, 1500);
+        }
+
+        (async function main() {
+            try {
+                await loadModels();
+                await startCamera();
+                setStatus('Loading employee roster…', 'info');
+                var matcherData = await buildMatcher();
+                if (!matcherData) { return; }
+                setStatus('Ready. Look at the camera.', 'ok');
+                loop(matcherData);
+            } catch (e) {
+                setStatus('Startup error: ' + e.message, 'err');
+            }
+        })();
+    })();
+    </script>
+</body>
+</html>
+</template>
+
+<template id="enroll_page" name="Enroll My Face">
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Enroll My Face</title>
+    <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+    <style>
+        body { font-family: -apple-system, Arial, sans-serif; background:#111827; color:#f9fafb;
+               margin:0; display:flex; flex-direction:column; align-items:center; padding:24px; }
+        h1 { font-size: 20px; font-weight: 600; }
+        #video-wrap { position:relative; width:360px; max-width:90vw; }
+        video { width:100%; border-radius:12px; }
+        #status { margin-top:16px; font-size:16px; min-height:28px; text-align:center; }
+        .ok { color:#34d399; } .err { color:#f87171; } .info { color:#93c5fd; }
+        button { margin-top:16px; padding:10px 20px; font-size:15px; border:0; border-radius:8px;
+                 background:#2563eb; color:#fff; cursor:pointer; }
+        button:disabled { opacity:0.5; cursor:not-allowed; }
+        #hint { margin-top:12px; font-size:13px; color:#9ca3af; text-align:center; max-width:400px; }
+        #back-link { position:absolute; top:16px; left:16px; color:#9ca3af; text-decoration:none;
+                     font-size:14px; padding:8px 14px; border:1px solid #374151; border-radius:8px; }
+        #back-link:hover { color:#f9fafb; border-color:#6b7280; }
+    </style>
+</head>
+<body>
+    <a id="back-link" href="/web">&#8592; Back to Home</a>
+    <h1>Enroll my face</h1>
+    <div t-if="not employee">
+        <p class="err">No employee record is linked to your user - ask HR to link one first.</p>
+    </div>
+    <div t-elif="not employee.mood_consent">
+        <p class="err">You haven't given consent to face recognition / mood detection yet.
+           Ask HR to tick consent on your employee record before enrolling.</p>
+    </div>
+    <t t-else="">
+        <div id="video-wrap">
+            <video id="video" autoplay="autoplay" muted="muted" playsinline="playsinline"></video>
+        </div>
+        <button id="capture-btn" disabled="disabled">Capture &amp; Save My Face</button>
+        <div id="status" class="info">Loading…</div>
+        <div id="hint">Look straight at the camera in good light, then click capture.
+            This replaces any previously enrolled face.</div>
+
+        <script type="application/json" id="config" t-att-data-model-url="model_url">{}</script>
+        <script>
+        (function () {
+            var MODEL_URL = document.getElementById('config').getAttribute('data-model-url');
+            var video = document.getElementById('video');
+            var btn = document.getElementById('capture-btn');
+            var statusEl = document.getElementById('status');
+
+            function setStatus(text, cls) {
+                statusEl.textContent = text;
+                statusEl.className = cls || 'info';
+            }
+
+            function jsonrpc(route, params) {
+                return fetch(route, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ jsonrpc: '2.0', method: 'call', params: params || {}, id: Date.now() }),
+                }).then(function (r) { return r.json(); }).then(function (data) {
+                    if (data.error) { throw new Error(data.error.data &amp;&amp; data.error.data.message || 'Server error'); }
+                    return data.result;
+                });
+            }
+
+            async function loadModels() {
+                await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
+                await faceapi.nets.faceLandmark68TinyNet.loadFromUri(MODEL_URL);
+                await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
+            }
+
+            function cameraErrorMessage(e) {
+                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                    return 'This browser/app cannot access the camera (no camera API available).';
+                }
+                var name = e &amp;&amp; e.name;
+                if (name === 'NotAllowedError' || name === 'PermissionDeniedError') {
+                    return 'Camera access was denied. Please allow camera permission for this page in your browser/app settings, then reload.';
+                }
+                if (name === 'NotFoundError' || name === 'DevicesNotFoundError') {
+                    return 'No camera was found on this device.';
+                }
+                if (name === 'NotReadableError' || name === 'TrackStartError') {
+                    return 'The camera is closed, disconnected, or already being used by another app.';
+                }
+                if (name === 'OverconstrainedError' || name === 'ConstraintNotSatisfiedError') {
+                    return 'No camera on this device matches the required settings.';
+                }
+                if (name === 'SecurityError') {
+                    return 'Camera access is blocked - this page must be opened over HTTPS (or localhost).';
+                }
+                return 'Could not access the camera' + (e &amp;&amp; e.message ? ': ' + e.message : '.');
+            }
+
+            async function startCamera() {
+                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                    throw new Error(cameraErrorMessage());
+                }
+                var stream;
+                try {
+                    stream = await navigator.mediaDevices.getUserMedia({ video: {} });
+                } catch (e) {
+                    throw new Error(cameraErrorMessage(e));
+                }
+                video.srcObject = stream;
+                return new Promise(function (resolve) { video.onloadedmetadata = resolve; });
+            }
+
+            btn.addEventListener('click', async function () {
+                btn.disabled = true;
+                setStatus('Capturing…', 'info');
+                try {
+                    var result = await faceapi
+                        .detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
+                        .withFaceLandmarks(true)
+                        .withFaceDescriptor();
+                    if (!result) {
+                        setStatus('No face detected - try again with better lighting.', 'err');
+                        btn.disabled = false;
+                        return;
+                    }
+                    var descriptor = Array.prototype.slice.call(result.descriptor);
+                    var res = await jsonrpc('/hr_face_mood/enroll', { descriptor: descriptor });
+                    if (res.success) {
+                        setStatus('Face enrolled successfully! Returning to Home…', 'ok');
+                        setTimeout(function () { window.location.href = '/web'; }, 1500);
+                        return;
+                    } else {
+                        setStatus('Could not save your face.', 'err');
+                    }
+                } catch (e) {
+                    setStatus('Error: ' + e.message, 'err');
+                } finally {
+                    btn.disabled = false;
+                }
+            });
+
+            (async function main() {
+                try {
+                    await loadModels();
+                    await startCamera();
+                    setStatus('Ready - click capture when you are facing the camera.', 'ok');
+                    btn.disabled = false;
+                } catch (e) {
+                    setStatus('Startup error: ' + e.message, 'err');
+                }
+            })();
+        })();
+        </script>
+    </t>
+</body>
+</html>
+</template>
+
+</odoo>

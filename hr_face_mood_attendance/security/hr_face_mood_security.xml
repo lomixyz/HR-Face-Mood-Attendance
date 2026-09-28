@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="group_mood_kiosk_user" model="res.groups">
+        <field name="name">Mood Attendance Kiosk Device</field>
+        <field name="comment">Technical group: assign this only to the dedicated
+            user a shared kiosk device (tablet at the entrance) stays logged
+            in as. It grants no backend access beyond what attendance already
+            gives - just permission to call the face/mood check-in endpoints
+            for other employees.</field>
+    </record>
+
+</odoo>
